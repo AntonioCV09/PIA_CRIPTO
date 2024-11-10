@@ -4,15 +4,13 @@ import 'package:url_launcher/url_launcher.dart';
 class InfoPersonalScreen extends StatelessWidget {
   const InfoPersonalScreen({super.key});
 
-  // Enlace directo al archivo .zip
+
   final String urlArchivo = 'https://github.com/AntonioCV09/PIA_CRIPTO/archive/refs/heads/main.zip';
 
-  // Método para abrir el enlace con manejo de errores
   Future<void> _abrirEnlace(String url) async {
     try {
       final Uri uri = Uri.parse(url);
       if (await canLaunchUrl(uri)) {
-        // Usa launchUrl con modo externo para mejor soporte en iOS
         await launchUrl(uri, mode: LaunchMode.externalApplication);
       } else {
         throw 'No se pudo abrir el enlace: $url';
