@@ -5,7 +5,7 @@ class InfoPersonalScreen extends StatelessWidget {
   const InfoPersonalScreen({super.key});
 
   // Enlace directo al archivo .zip
-  final String urlArchivo = 'enlace.zip';
+  final String urlArchivo = 'https://github.com/AntonioCV09/PIA_CRIPTO.git';
 
   // Método para abrir el enlace
   Future<void> _abrirEnlace(String url) async {
