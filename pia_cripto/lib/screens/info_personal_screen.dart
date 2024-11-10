@@ -5,23 +5,29 @@ class InfoPersonalScreen extends StatelessWidget {
   const InfoPersonalScreen({super.key});
 
   // Enlace directo al archivo .zip
-  final String urlArchivo = 'https://github.com/AntonioCV09/PIA_CRIPTO.git';
+  final String urlArchivo = 'https://github.com/AntonioCV09/PIA_CRIPTO/archive/refs/heads/main.zip';
 
-  // Método para abrir el enlace
+  // Método para abrir el enlace con manejo de errores
   Future<void> _abrirEnlace(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'No se pudo abrir el enlace: $url';
+    try {
+      final Uri uri = Uri.parse(url);
+      if (await canLaunchUrl(uri)) {
+        // Usa launchUrl con modo externo para mejor soporte en iOS
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+      } else {
+        throw 'No se pudo abrir el enlace: $url';
+      }
+    } catch (e) {
+      debugPrint('Error al descargar el archivo: $e');
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: Colors.white,
         title: const Text('Mi Información'),
       ),
       body: Padding(
@@ -30,7 +36,7 @@ class InfoPersonalScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Card(
-              color: const Color.fromARGB(255, 255, 255, 255),
+              color: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
               ),
@@ -45,18 +51,9 @@ class InfoPersonalScreen extends StatelessWidget {
                       style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 10),
-                    Text(
-                      'Nombre: Abel Antonio Castillo Valle',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    Text(
-                      'Matrícula: 1965990',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    Text(
-                      'Carrera: Licenciatura en Ciencias Computacionales',
-                      style: TextStyle(fontSize: 18),
-                    ),
+                    Text('Nombre: Abel Antonio Castillo Valle', style: TextStyle(fontSize: 18)),
+                    Text('Matrícula: 1965990', style: TextStyle(fontSize: 18)),
+                    Text('Carrera: Licenciatura en Ciencias Computacionales', style: TextStyle(fontSize: 18)),
                   ],
                 ),
               ),
@@ -128,8 +125,6 @@ class InfoPersonalScreen extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
-                  shadowColor: Colors.greenAccent,
-                  elevation: 5,
                 ),
               ),
             ),
